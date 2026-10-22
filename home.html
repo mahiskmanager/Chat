@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inside</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+<div id="maintenance" class="maintenance hidden"><div class="maintenance-card"><div class="m-ico">🔧</div><h2>Estamos en mantenimiento</h2><p id="maintenanceText">Volvemos en unos minutos…</p></div></div>
+<div id="announcement" class="announcement hidden"><span id="annText"></span><button class="ann-close" onclick="document.getElementById('announcement').classList.add('hidden')">✕</button></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-logo sm">IN</div><div class="brand-text"><h1>Inside</h1><span>red social</span></div></div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="feed"><span class="ni">🏠</span><span>Inicio</span></button>
+      <button class="nav-item" data-view="chats"><span class="ni">💬</span><span>Mensajes</span><span class="nav-badge hidden" id="chatBadge"></span></button>
+      <button class="nav-item" data-view="groups"><span class="ni">👥</span><span>Grupos</span></button>
+      <button class="nav-item" data-view="people"><span class="ni">🔍</span><span>Explorar</span></button>
+      <button class="nav-item" data-view="requests"><span class="ni">🤝</span><span>Solicitudes</span><span class="nav-badge hidden" id="reqBadge"></span></button>
+      <button class="nav-item" data-view="notifications"><span class="ni">🔔</span><span>Notificaciones</span><span class="nav-badge hidden" id="notifBadge"></span></button>
+      <button class="nav-item" data-view="saved"><span class="ni">🔖</span><span>Guardados</span></button>
+      <button class="nav-item" data-view="profile"><span class="ni">👤</span><span>Perfil</span></button>
+      <button class="nav-item" data-view="settings"><span class="ni">⚙️</span><span>Ajustes</span></button>
+    </nav>
+    <div class="side-user">
+      <div class="avatar" id="sideAvatar">?</div>
+      <div class="su-info"><span class="su-name" id="sideName">—</span><span class="su-email" id="sideEmail">—</span></div>
+      <button class="icon-btn" id="themeBtn" title="Tema">🌙</button>
+      <button class="icon-btn" id="logoutBtn" title="Cerrar sesión">⏻</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h2 id="topTitle">Inicio</h2>
+      <span class="online-pill"><span class="dot"></span><span id="topOnline">0 en línea</span></span>
+    </header>
+
+    <section class="view active" id="view-feed">
+      <div class="stories" id="stories"><div class="story story-add" id="storyAdd"><div class="avatar-ring"><div class="avatar sm">+</div></div><span>Tu historia</span></div></div>
+      <div class="composer-card">
+        <div class="avatar" id="feedAvatar">?</div>
+        <textarea id="postInput" placeholder="¿Qué estás pensando? Usa #hashtags y @menciones" maxlength="500" rows="2"></textarea>
+        <div class="comp-actions">
+          <button type="button" class="emoji-trigger" data-target="postInput">😊</button>
+          <button type="button" class="toggle-poll" id="pollToggle" title="Crear encuesta">📊 Encuesta</button>
+          <span class="char-count" id="postCount">0/500</span>
+          <button class="btn-primary small" id="postBtn">Publicar</button>
+        </div>
+        <div class="poll-builder hidden" id="pollBuilder">
+          <p class="poll-hint">Opciones de la encuesta (máx 4):</p>
+          <input type="text" class="poll-opt" placeholder="Opción 1" maxlength="40">
+          <input type="text" class="poll-opt" placeholder="Opción 2" maxlength="40">
+          <input type="text" class="poll-opt" placeholder="Opción 3 (opcional)" maxlength="40">
+          <input type="text" class="poll-opt" placeholder="Opción 4 (opcional)" maxlength="40">
+        </div>
+      </div>
+      <div class="hashtag-filter hidden" id="hashtagFilter"><span>Filtrando por: <b id="hashtagName"></b></span><button onclick="clearHashtag()">✕ Quitar filtro</button></div>
+      <div id="feedList" class="feed-list"><p class="empty">Cargando…</p></div>
+    </section>
+
+    <section class="view" id="view-chats">
+      <div class="chat-split">
+        <div class="chat-list" id="chatListPanel">
+          <div class="panel-head"><h3>Mensajes</h3><button class="link-btn" id="newChatBtn">+ Nuevo</button></div>
+          <div class="chat-search"><input type="text" id="chatSearch" placeholder="🔍 Buscar en chats…"></div>
+          <div id="dmList" class="dm-list"><p class="empty">Agrega amigos para chatear</p></div>
+        </div>
+        <div class="chat-conv" id="chatConvPanel">
+          <div class="conv-ph" id="convPlaceholder"><div class="ph-ico">💬</div><p>Selecciona una conversación</p></div>
+          <div class="conv-active hidden" id="convActive">
+            <div class="conv-head">
+              <button class="back-btn" id="convBack">←</button>
+              <div class="avatar sm" id="convAvatar">?</div>
+              <div style="flex:1;min-width:0" id="convUserClick"><span class="conv-name" id="convName">—</span><span class="conv-status" id="convStatus">—</span></div>
+              <button class="icon-btn" id="pinConvBtn" title="Fijar chat">📌</button>
+              <button class="icon-btn" id="muteConvBtn" title="Silenciar">🔔</button>
+              <button class="icon-btn" id="archiveConvBtn" title="Archivar">📦</button>
+              <button class="icon-btn" id="blockBtn" title="Bloquear">🚫</button>
+            </div>
+            <div class="pinned-banner hidden" id="pinnedBanner"><span>📌 <span id="pinnedText"></span></span><button class="icon-btn" onclick="unpinMessage()">✕</button></div>
+            <div class="messages" id="dmMessages"></div>
+            <div class="reply-preview hidden" id="replyPreview"><span id="replyText"></span><button class="icon-btn" onclick="cancelReply()">✕</button></div>
+            <div class="typing-indicator" id="dmTyping" hidden><span class="typing-name" id="dmTypingName"></span><span class="dots"><i></i><i></i><i></i></span></div>
+            <form class="composer" id="dmComposer" autocomplete="off">
+              <button type="button" class="emoji-trigger" data-target="dmInput">😊</button>
+              <input type="text" id="dmInput" placeholder="Escribe un mensaje… (usa @ para mencionar)" maxlength="500">
+              <button type="submit" class="send-btn">➤</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-groups">
+      <div class="panel-head" style="margin-bottom:14px"><h3 style="font-size:16px">Mis grupos</h3><button class="btn-primary small" id="createGroupBtn">+ Crear grupo</button></div>
+      <div id="groupsList" class="user-grid"><p class="empty">No tienes grupos. Crea uno y chatea con varios amigos a la vez.</p></div>
+    </section>
+
+    <section class="view" id="view-people">
+      <div class="search-box"><input type="text" id="searchInput" placeholder="🔍 Buscar usuarios, posts o #hashtags…" autocomplete="off"></div>
+      <div class="search-tabs"><button class="stab active" data-stab="users">Usuarios</button><button class="stab" data-stab="posts">Publicaciones</button><button class="stab" data-stab="hashtags"># Hashtags</button></div>
+      <h3 class="sec-title">Sugerencias para ti</h3>
+      <div id="suggestList" class="user-grid"><p class="empty">Cargando…</p></div>
+      <h3 class="sec-title">Tus amigos</h3>
+      <div id="friendsList" class="user-grid"><p class="empty">Aún no tienes amigos.</p></div>
+      <div id="searchResults"></div>
+    </section>
+
+    <section class="view" id="view-requests">
+      <h3 class="sec-title">Solicitudes recibidas</h3>
+      <div id="incomingList" class="user-grid"><p class="empty">No tienes solicitudes pendientes</p></div>
+      <h3 class="sec-title">Enviadas</h3>
+      <div id="sentList" class="user-grid"><p class="empty">No has enviado solicitudes</p></div>
+    </section>
+
+    <section class="view" id="view-notifications">
+      <div class="card notif-head"><h3>Notificaciones</h3><button class="btn-ghost" id="clearNotif">Marcar todas como leídas</button></div>
+      <div id="notifList" class="notif-list"><p class="empty">Sin notificaciones</p></div>
+    </section>
+
+    <section class="view" id="view-saved">
+      <h3 class="sec-title">Publicaciones guardadas 🔖</h3>
+      <div id="savedList" class="feed-list"><p class="empty">Aún no has guardado publicaciones.</p></div>
+    </section>
+
+    <section class="view" id="view-profile">
+      <div class="profile-card">
+        <div class="avatar big" id="profileAvatar">?</div>
+        <h2 id="profileName">—</h2>
+        <p class="profile-status" id="profileStatus">✨ Disponible</p>
+        <p class="profile-email" id="profileEmail">—</p>
+        <p class="profile-bio" id="profileBio">Sin biografía</p>
+        <div class="profile-stats">
+          <div><b id="statPosts">0</b><span>Publicaciones</span></div>
+          <div><b id="statFriends">0</b><span>Amigos</span></div>
+          <div><b id="statGroups">0</b><span>Grupos</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Editar perfil</h3>
+        <div class="field"><label>Nombre visible</label><input type="text" id="editName" maxlength="20"></div>
+        <div class="field"><label>Estado (WhatsApp style)</label><input type="text" id="editStatus" maxlength="60" placeholder="Ej: En el trabajo, disponible…"></div>
+        <div class="field"><label>Biografía</label><textarea id="editBio" rows="3" maxlength="120"></textarea></div>
+        <button class="btn-primary" id="saveProfileBtn">Guardar cambios</button>
+        <span class="save-ok hidden" id="saveOk">✅ Guardado</span>
+      </div>
+      <div class="card"><h3>Mis publicaciones</h3><div id="myPosts" class="feed-list"><p class="empty">Aún no has publicado nada</p></div></div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <div class="card">
+        <h3>Privacidad y notificaciones</h3>
+        <div class="setting-row"><div class="setting-info"><h4>Sonido de mensajes</h4><p>Tono al recibir mensajes nuevos</p></div><div class="switch" id="swSound" onclick="toggleSound()"></div></div>
+        <div class="setting-row"><div class="setting-info"><h4>Notificaciones del navegador</h4><p>Alertas aunque estés en otra pestaña</p></div><button class="btn-ghost" id="enableNotifBtn">Activar</button></div>
+        <div class="setting-row"><div class="setting-info"><h4>Descargar mis datos</h4><p>Exporta tu información en JSON</p></div><button class="btn-ghost" onclick="exportMyData()">⬇ Descargar</button></div>
+      </div>
+      <div class="card"><h3>Usuarios bloqueados</h3><div id="blockedList" class="user-grid"><p class="empty">No has bloqueado a nadie.</p></div></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal hidden" id="friendModal"><div class="modal-card"><div class="modal-head"><h3>Iniciar chat con…</h3><button class="icon-btn" id="closeModal">✕</button></div><div id="modalFriendList" class="dm-list"></div></div></div>
+
+<div class="modal hidden" id="groupModal"><div class="modal-card"><div class="modal-head"><h3>Crear grupo</h3><button class="icon-btn" onclick="closeGroupModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Nombre del grupo</label><input type="text" id="groupName" maxlength="30" placeholder="Ej: Familia, Trabajo…"></div>
+    <p style="font-size:13px;color:var(--soft);margin-bottom:8px">Selecciona los miembros:</p>
+    <div id="groupMembers" style="max-height:200px;overflow-y:auto"></div>
+    <button class="btn-primary" id="createGroupConfirm" style="margin-top:14px">Crear grupo</button>
+  </div>
+</div></div>
+
+<div class="modal story-modal hidden" id="storyModal"><div class="story-viewer"><div class="story-progress"><div class="story-bar" id="storyBar"></div></div><div class="story-head"><div class="avatar sm" id="storyAvatar">?</div><span id="storyAuthor">—</span><button class="icon-btn hidden" id="storyDelete" title="Eliminar historia">🗑</button><button class="icon-btn" onclick="closeStory()">✕</button></div><div class="story-content" id="storyContent"></div><div class="story-foot" id="storyTime"></div></div></div>
+
+<div class="modal hidden" id="userModal"><div class="modal-card wide"><div class="modal-head"><h3>Perfil</h3><button class="icon-btn" onclick="closeUserModal()">✕</button></div><div id="userModalBody"></div></div></div>
+
+<div class="modal hidden" id="reportModal"><div class="modal-card"><div class="modal-head"><h3>Reportar</h3><button class="icon-btn" onclick="closeReport()">✕</button></div><div class="modal-body"><p class="report-desc">Motivo (se envía al administrador):</p><select id="reportReason"><option>Contenido inapropiado</option><option>Spam</option><option>Acoso</option><option>Suplantación</option><option>Otro</option></select><textarea id="reportDetails" rows="3" placeholder="Detalles…" style="width:100%;margin-top:10px;padding:10px;border-radius:8px;border:1.5px solid #e5e7eb"></textarea><button class="btn-primary" id="sendReport" style="margin-top:12px">Enviar reporte</button></div></div></div>
+
+<div class="emoji-picker hidden" id="emojiPicker"></div>
+<div id="toast" class="toast hidden"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
