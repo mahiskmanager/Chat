@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inside — Iniciar Sesión</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+<div class="auth-bg">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+</div>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand-auth">
+      <div class="brand-logo">IN</div>
+      <h1>Inside</h1>
+      <p>Conecta, comparte y chatea con tu gente</p>
+    </div>
+    <div class="alert hidden" id="alertBox"></div>
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required minlength="6">
+      </div>
+      <button type="submit" class="btn-primary" id="loginBtn">
+        <span class="btn-text">Entrar</span><span class="spinner hidden"></span>
+      </button>
+    </form>
+    <p class="auth-foot">¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+  </div>
+  <p class="app-ver">Inside v2.0 · Firebase Realtime</p>
+</div>
+<script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inside</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo sm">IN</div>
+      <div class="brand-text"><h1>Inside</h1><span>red social</span></div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="feed"><span class="ni">🏠</span><span>Inicio</span></button>
+      <button class="nav-item" data-view="chats"><span class="ni">💬</span><span>Mensajes</span><span class="nav-badge hidden" id="chatBadge"></span></button>
+      <button class="nav-item" data-view="people"><span class="ni">🔍</span><span>Buscar</span></button>
+      <button class="nav-item" data-view="requests"><span class="ni">🤝</span><span>Solicitudes</span><span class="nav-badge hidden" id="reqBadge"></span></button>
+      <button class="nav-item" data-view="profile"><span class="ni">👤</span><span>Perfil</span></button>
+    </nav>
+    <div class="side-user">
+      <div class="avatar" id="sideAvatar">?</div>
+      <div class="su-info"><span class="su-name" id="sideName">—</span><span class="su-email" id="sideEmail">—</span></div>
+      <button class="icon-btn" id="logoutBtn" title="Cerrar sesión">⏻</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h2 id="topTitle">Inicio</h2>
+      <span class="online-pill"><span class="dot"></span><span id="topOnline">0 en línea</span></span>
+    </header>
+
+    <!-- FEED -->
+    <section class="view active" id="view-feed">
+      <!-- Historias / sugerencias -->
+      <div class="stories" id="stories"></div>
+
+      <div class="composer-card">
+        <div class="avatar" id="feedAvatar">?</div>
+        <textarea id="postInput" placeholder="¿Qué estás pensando? (solo texto)" maxlength="500" rows="2"></textarea>
+        <div class="comp-actions"><span class="char-count" id="postCount">0/500</span><button class="btn-primary small" id="postBtn">Publicar</button></div>
+      </div>
+
+      <div id="feedList" class="feed-list"><p class="empty">Cargando publicaciones…</p></div>
+    </section>
+
+    <!-- CHATS -->
+    <section class="view" id="view-chats">
+      <div class="chat-split">
+        <div class="chat-list" id="chatListPanel">
+          <div class="panel-head"><h3>Mensajes</h3><button class="link-btn" id="newChatBtn">+ Nuevo</button></div>
+          <div id="dmList" class="dm-list"><p class="empty">Agrega amigos para chatear</p></div>
+        </div>
+        <div class="chat-conv" id="chatConvPanel">
+          <div class="conv-ph" id="convPlaceholder"><div class="ph-ico">💬</div><p>Selecciona una conversación<br>o inicia una nueva</p></div>
+          <div class="conv-active hidden" id="convActive">
+            <div class="conv-head">
+              <button class="back-btn" id="convBack">←</button>
+              <div class="avatar sm" id="convAvatar">?</div>
+              <div><span class="conv-name" id="convName">—</span><span class="conv-status" id="convStatus">—</span></div>
+            </div>
+            <div class="messages" id="dmMessages"></div>
+            <div class="typing-indicator" id="dmTyping" hidden><span class="typing-name" id="dmTypingName"></span><span class="dots"><i></i><i></i><i></i></span></div>
+            <form class="composer" id="dmComposer" autocomplete="off">
+              <input type="text" id="dmInput" placeholder="Escribe un mensaje…" maxlength="500">
+              <button type="submit" class="send-btn">➤</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSCAR -->
+    <section class="view" id="view-people">
+      <div class="search-box"><input type="text" id="searchInput" placeholder="🔍 Buscar usuarios por nombre…" autocomplete="off"></div>
+      <h3 class="sec-title">Tus amigos</h3>
+      <div id="friendsList" class="user-grid"><p class="empty">Aún no tienes amigos. Busca personas arriba.</p></div>
+      <h3 class="sec-title">Resultados</h3>
+      <div id="searchResults" class="user-grid"><p class="empty">Escribe un nombre para buscar</p></div>
+    </section>
+
+    <!-- SOLICITUDES -->
+    <section class="view" id="view-requests">
+      <h3 class="sec-title">Solicitudes recibidas</h3>
+      <div id="incomingList" class="user-grid"><p class="empty">No tienes solicitudes pendientes</p></div>
+      <h3 class="sec-title">Enviadas (pendientes)</h3>
+      <div id="sentList" class="user-grid"><p class="empty">No has enviado solicitudes</p></div>
+    </section>
+
+    <!-- PERFIL -->
+    <section class="view" id="view-profile">
+      <div class="profile-card">
+        <div class="avatar big" id="profileAvatar">?</div>
+        <h2 id="profileName">—</h2>
+        <p class="profile-email" id="profileEmail">—</p>
+        <p class="profile-bio" id="profileBio">Sin biografía</p>
+        <div class="profile-stats">
+          <div><b id="statPosts">0</b><span>Publicaciones</span></div>
+          <div><b id="statFriends">0</b><span>Amigos</span></div>
+          <div><b id="statSince">—</b><span>Desde</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Editar perfil</h3>
+        <div class="field"><label>Nombre visible</label><input type="text" id="editName" maxlength="20"></div>
+        <div class="field"><label>Biografía</label><textarea id="editBio" rows="3" maxlength="120" placeholder="Cuéntanos sobre ti…"></textarea></div>
+        <button class="btn-primary" id="saveProfileBtn">Guardar cambios</button>
+        <span class="save-ok hidden" id="saveOk">✅ Guardado</span>
+      </div>
+      <div class="card">
+        <h3>Mis publicaciones</h3>
+        <div id="myPosts" class="feed-list"><p class="empty">Aún no has publicado nada</p></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal hidden" id="friendModal">
+  <div class="modal-card">
+    <div class="modal-head"><h3>Iniciar chat con…</h3><button class="icon-btn" id="closeModal">✕</button></div>
+    <div id="modalFriendList" class="dm-list"></div>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
