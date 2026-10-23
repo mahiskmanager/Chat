@@ -1,0 +1,13 @@
+/* themes.css — 12 temas reales con paletas completas */
+[data-theme="default"]{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#eef2ff;--grad2:linear-gradient(135deg,#6366f1,#a855f7)}
+[data-theme="sunset"]{--primary:#f97316;--primary-dark:#ea580c;--primary-light:#fff7ed;--grad2:linear-gradient(135deg,#f97316,#ef4444)}
+[data-theme="ocean"]{--primary:#0ea5e9;--primary-dark:#0284c7;--primary-light:#f0f9ff;--grad2:linear-gradient(135deg,#0ea5e9,#3b82f6)}
+[data-theme="forest"]{--primary:#10b981;--primary-dark:#059669;--primary-light:#ecfdf5;--grad2:linear-gradient(135deg,#10b981,#84cc16)}
+[data-theme="royal"]{--primary:#7c3aed;--primary-dark:#6d28d9;--primary-light:#f5f3ff;--grad2:linear-gradient(135deg,#7c3aed,#4f46e5)}
+[data-theme="candy"]{--primary:#ec4899;--primary-dark:#db2777;--primary-light:#fdf2f8;--grad2:linear-gradient(135deg,#ec4899,#f472b6)}
+[data-theme="gold"]{--primary:#f59e0b;--primary-dark:#d97706;--primary-light:#fffbeb;--grad2:linear-gradient(135deg,#f59e0b,#eab308)}
+[data-theme="cherry"]{--primary:#e11d48;--primary-dark:#be123c;--primary-light:#fff1f2;--grad2:linear-gradient(135deg,#e11d48,#fb7185)}
+[data-theme="mint"]{--primary:#14b8a6;--primary-dark:#0d9488;--primary-light:#f0fdfa;--grad2:linear-gradient(135deg,#14b8a6,#2dd4bf)}
+[data-theme="grape"]{--primary:#9333ea;--primary-dark:#7e22ce;--primary-light:#faf5ff;--grad2:linear-gradient(135deg,#9333ea,#c026d3)}
+[data-theme="midnight"]{--primary:#334155;--primary-dark:#1e293b;--primary-light:#f8fafc;--grad2:linear-gradient(135deg,#334155,#0f172a)}
+[data-theme="mono"]{--primary:#475569;--primary-dark:#334155;--primary-light:#f1f5f9;--grad2:linear-gradient(135deg,#475569,#64748b)}
